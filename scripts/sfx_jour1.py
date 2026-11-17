@@ -2,7 +2,7 @@
 import numpy as np, wave, sys
 
 SR = 48000
-DUR = 51.7
+DUR = 54.6
 rng = np.random.default_rng(7)
 out = np.zeros(int(SR * DUR) + SR, dtype=np.float64)
 
@@ -111,26 +111,30 @@ place(0.00, boom()); place(0.02, pop(0.35))
 place(7.80, whoosh()); place(8.02, pop(0.3))
 place(8.85, whoosh(0.3, peak=0.2))
 place(16.00, pop(0.25, 1200, 500))
-place(17.20, riser()); place(17.50, whoosh(0.4, 400, 5000, 0.3))
-for k, tt in enumerate(np.arange(17.6, 21.9, 0.25)):
+# v9: Prada perfume test kept in full (16.0 -> 21.2)
+place(18.40, pop(0.25, 1100, 450))
+place(19.95, sparkle(0.26)); place(19.90, whoosh(0.3, 600, 6000, 0.18))
+S = 2.887  # shift for everything after the perfume block
+place(20.90, riser()); place(21.20, whoosh(0.4, 400, 5000, 0.3))
+for k, tt in enumerate(np.arange(21.3, 24.8, 0.25)):
     place(tt, tick(k % 2 == 0))
-place(19.50, pop(0.28))
-place(21.95, boom(0.45)); place(22.05, ding(1318.5, 0.25))
-place(26.54, pop(0.3))
-place(35.80, womp())
-place(38.22, pop(0.3))
-place(40.72, sparkle())
-place(41.45, whoosh())
+place(22.80, pop(0.28))
+place(21.95 + S, boom(0.45)); place(22.05 + S, ding(1318.5, 0.25))
+place(26.54 + S, pop(0.3))
+place(35.80 + S, womp())
+place(38.22 + S, pop(0.3))
+place(40.72 + S, sparkle())
+place(41.45 + S, whoosh())
 for tt in (41.9, 42.6, 43.3):
-    place(tt, shutter())
-place(44.00, whoosh(0.35, peak=0.25))
+    place(tt + S, shutter())
+place(44.00 + S, whoosh(0.35, peak=0.25))
 for tt in np.arange(44.3, 46.4, 0.13):
-    place(tt + rng.uniform(-0.03, 0.03), key_click())
-place(46.40, whoosh(0.5, 300, 4000, 0.32))
-place(46.88, pop(0.35))
+    place(tt + S + rng.uniform(-0.03, 0.03), key_click())
+place(46.40 + S, whoosh(0.5, 300, 4000, 0.32))
+place(46.88 + S, pop(0.35))
 for tt, f in zip((47.38, 47.88, 48.38, 48.88), (1046.5, 1174.7, 1318.5, 1568.0)):
-    place(tt, ding(f, 0.3))
-place(49.30, pop(0.32, 1000, 400))
+    place(tt + S, ding(f, 0.3))
+place(49.30 + S, pop(0.32, 1000, 400))
 
 out = out[:int(SR * DUR)]
 out = np.tanh(out * 1.2) * 0.85

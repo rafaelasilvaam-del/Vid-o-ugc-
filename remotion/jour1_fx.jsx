@@ -6,21 +6,22 @@ import {
 
 // Effects layer for the edited Jour 1 reel (v8): zooms, shake, flashes, sparkles, FF badge.
 const FPS = 30;
-const DURATION = 51.66;
+const DURATION = 54.56;
 const PINK_SOFT = '#FFB8DA';
 const f = (s) => Math.round(s * FPS);
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'};
 
 // [start, end, peakScale]
 const PUNCHES = [
-  [21.98, 22.9, 1.10],   // "1h plus tard…"
-  [26.50, 27.10, 1.06],  // "18h58"
-  [35.75, 37.55, 1.15],  // "C'est tellement long"
-  [40.75, 41.62, 1.18],  // "Canva c'est le best !"
+  [19.85, 20.95, 1.12],  // Prada perfume lift
+  [24.867, 25.787, 1.10],   // "1h plus tard…"
+  [29.387, 29.987, 1.06],  // "18h58"
+  [38.637, 40.437, 1.15],  // "C'est tellement long"
+  [43.637, 44.507, 1.18],  // "Canva c'est le best !"
 ];
-const SHAKES = [[35.80, 36.30]];
-const FLASHES = [8.0, 17.5, 21.98, 41.68, 46.63];
-const FAST = [[17.5, 21.98], [41.68, 46.63]];
+const SHAKES = [[38.687, 39.187]];
+const FLASHES = [8.0, 21.2, 24.867, 44.567, 49.517];
+const FAST = [[21.2, 24.867], [44.567, 49.517]];
 
 const scaleAt = (t) => {
   let s = interpolate(t, [0, 0.45], [1.12, 1], {...clamp, easing: Easing.out(Easing.cubic)});
@@ -29,7 +30,7 @@ const scaleAt = (t) => {
       s *= interpolate(t, [a, a + 0.12, b - 0.12, b], [1, p, p, 1], clamp);
     }
   }
-  if (t >= 46.63) s *= interpolate(t, [46.63, DURATION], [1, 1.05], clamp);
+  if (t >= 49.517) s *= interpolate(t, [49.517, DURATION], [1, 1.05], clamp);
   return s;
 };
 
@@ -73,7 +74,7 @@ const FastBadge = () => {
   return (
     <AbsoluteFill style={{alignItems: 'flex-end', top: 120, paddingRight: 48}}>
       <div style={{fontFamily: 'sans-serif', fontWeight: 800, fontSize: 40, color: '#fff', background: 'rgba(30,26,29,0.75)',
-        padding: '8px 22px', borderRadius: 30, opacity: blink, letterSpacing: 2}}>▶▶ x2</div>
+        padding: '8px 22px', borderRadius: 30, opacity: blink, letterSpacing: 2}}>▶▶ accéléré</div>
     </AbsoluteFill>
   );
 };
@@ -91,7 +92,8 @@ const Fx = () => {
       {FAST.map(([a, b], i) => (
         <Sequence key={'ff' + i} from={f(a)} durationInFrames={f(b) - f(a)}><FastBadge /></Sequence>
       ))}
-      <Sequence from={f(40.72)} durationInFrames={30}><Sparkles /></Sequence>
+      <Sequence from={f(19.95)} durationInFrames={30}><Sparkles /></Sequence>
+      <Sequence from={f(43.607)} durationInFrames={30}><Sparkles /></Sequence>
       {FLASHES.map((a, i) => (
         <Sequence key={'fl' + i} from={f(a) - 1} durationInFrames={7}><Flash /></Sequence>
       ))}
