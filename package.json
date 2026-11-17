@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
+    "@fontsource/fredoka": "^5.2.8",
     "@remotion/bundler": "^4.0.544",
     "@remotion/cli": "^4.0.544",
     "@remotion/renderer": "^4.0.544",
